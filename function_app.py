@@ -10,6 +10,11 @@ model = AutoModelForTokenClassification.from_pretrained("d4data/biomedical-ner-a
 
 pipe = pipeline("ner", model=model, tokenizer=tokenizer, aggregation_strategy="simple")
 
+
+@app.route(route="HealthCheck", auth_level=func.AuthLevel.ANONYMOUS)
+def HealthCheck(req: func.HttpRequest) -> func.HttpResponse:
+    return func.HttpResponse("Healthy", status_code=200)
+
 @app.route(route="DiseaseDetectorTrigger", auth_level=func.AuthLevel.ANONYMOUS)
 def DiseaseDetectorTrigger(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -39,6 +44,4 @@ def DiseaseDetectorTrigger(req: func.HttpRequest) -> func.HttpResponse:
         result = "Not enough data to form the result"
     return func.HttpResponse(result.title(), status_code=200)
 
-@app.route(route="Health", auth_level=func.AuthLevel.ANONYMOUS)
-def Health(req: func.HttpRequest) -> func.HttpResponse:
-    return func.HttpResponse("Healthy", status_code=200)
+
