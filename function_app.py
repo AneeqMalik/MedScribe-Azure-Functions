@@ -38,3 +38,7 @@ def DiseaseDetectorTrigger(req: func.HttpRequest) -> func.HttpResponse:
     else:
         result = "Not enough data to form the result"
     return func.HttpResponse(result.title(), status_code=200)
+
+@app.route(route="Health", auth_level=func.AuthLevel.ANONYMOUS)
+def Health(req: func.HttpRequest) -> func.HttpResponse:
+    return func.HttpResponse("Healthy", status_code=200)
